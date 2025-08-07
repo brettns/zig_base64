@@ -13,7 +13,11 @@ pub fn main() !void {
         return;
     }
 
-    const result = try b64.decode(allocator, args[1]);
+    const encoded = try b64.encode(allocator, args[1]);
+    defer allocator.free(encoded);
+    std.debug.print("encoded: {s}\n", .{encoded});
+
+    const result = try b64.decode(allocator, encoded);
     defer allocator.free(result);
-    std.debug.print("{s}", .{result});
+    std.debug.print("decoded: {s}\n", .{result});
 }
