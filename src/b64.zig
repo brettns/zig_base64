@@ -54,7 +54,7 @@ pub fn encode(allocator: std.mem.Allocator, input: []const u8) ![]u8 {
                 52...61 => c - 52 + '0',
                 62 => '+',
                 63 => '/',
-                else => return error.InvalidBase64Character;
+                else => return error.InvalidBase64Character,
             };
 
             output[byte_index] = encoded_char;
@@ -102,7 +102,7 @@ fn count_padding(input: []const u8) usize {
     var i: usize = input.len - 1;
     var padding: usize = 0;
 
-    while (i >= 0 and input[i] == '=') : (i -= 1) {
+    while (i > 0 and input[i] == '=') : (i -= 1) {
         padding += 1;
     }
 
