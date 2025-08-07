@@ -1,6 +1,6 @@
 # Zig Base64
 
-As a way to learn Zig, I wanted to try implementing a Base64 decoder. I’ll probably add encoding at some point too.
+As a way to learn Zig, I wanted to try implementing a Base64 decoder. I also added encoding as well, though it doesn't feel as clean as the decoding function. Maybe splitting things out more would help, but I kinda wanted it just as a simple single file for now.
 
 It's mostly implemented through bitwise operations.
 
