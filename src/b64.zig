@@ -14,11 +14,11 @@ const BitQueue = struct {
     pub fn dequeue(self: *Self, size: u5) u8 {
         if (self.count < size) @panic("cannot dequeue!");
 
-        // Get the value
+        // Shift the specified number of bits to the right and store it
         const shift_amount: u5 = self.count - size;
         const result: u8 = @intCast(self.queue >> shift_amount);
 
-        // Remove the bits from the queue
+        // Mask off the dequeued bits, while keep everything below
         self.queue &= (@as(u32, 1) << shift_amount) - 1;
         self.count -= size;
         return result;
@@ -54,10 +54,7 @@ pub fn encode(allocator: std.mem.Allocator, input: []const u8) ![]u8 {
                 52...61 => c - 52 + '0',
                 62 => '+',
                 63 => '/',
-                else => {
-                    std.debug.print("{d} {b:0>8}\n", .{ c, c });
-                    return error.InvalidBase64Character;
-                },
+                else => return error.InvalidBase64Character;
             };
 
             output[byte_index] = encoded_char;
